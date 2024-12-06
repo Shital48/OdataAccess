@@ -1,0 +1,13 @@
+---
+applications:
+  - name: approvermatrix
+    path: ./  # Path to the app directory
+    memory: 256M
+    buildpacks:
+      - nodejs_buildpack
+    env:
+      destinations: |
+        [
+          { "name": "nusbtpbldest", "url": "https://backend-api.example.com" },
+          { "name": "nusbtpbldest_massaction", "url": "https://massaction-api.example.com" }
+        ]

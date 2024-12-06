@@ -1,0 +1,51 @@
+{
+    "welcomeFile": "/webapp/index.html",
+    "authenticationMethod": "none",
+    "routes": [
+        {
+            "source": "^/resources/(.*)$",
+            "target": "/resources/$1",
+            "service": "sapui5"
+        },
+        {
+            "source": "^/test-resources/(.*)$",
+            "target": "/test-resources/$1",
+            "service": "sapui5"
+        },
+        {
+            "source": "^/webapp/resources/(.*)$",
+            "target": "/resources/$1",
+            "service": "sapui5"
+        },
+        {
+            "source": "^/webapp/test-resources/(.*)$",
+            "target": "/test-resources/$1",
+            "service": "sapui5"
+        },
+        {
+            "source": "^/tokenauthorize/(.*)$",
+            "destination": "nusbtpbldest",
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/odata/(.*)$",
+            "destination": "nusbtpbldest",
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/rest/attachments/uploadZipAttachmentUpload/(.*)$",
+            "destination": "nusbtpbldest_massaction",
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/rest/(.*)$",
+            "destination": "nusbtpbldest",
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/services/userapi/(.*)$",
+            "target": "/userapi/$1",
+            "service": "userapi"
+        }
+    ]
+}

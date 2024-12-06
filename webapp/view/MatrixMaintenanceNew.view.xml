@@ -1,0 +1,112 @@
+<mvc:View class="sapUiSizeCompact" controllerName="nus.edu.sg.approvermatrix.controller.MatrixMaintenance" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core">
+	<App id="appMatrixAppId">
+		<Page id="approverMatrixPage" showHeader="false" class="sapUiSizeCompact sapUiNoMargin">
+			<content>
+				<ObjectHeader class="sapUiSizeCompact" responsive="true" icon="{AppModel>/staffPhoto}" imageShape="Circle"
+					title="{AppModel>/loggedInUserInfo/displayName}" iconDensityAware="false" titleActive="false" titlePress="handleTitlePress"
+					showTitleSelector="true" titleSelectorPress="handleQuickViewBtnPress" backgroundDesign="Translucent">
+					<headerContainer>
+						<IconTabBar id="itb1" selectedKey="{AppModel>/iconTabBarSelectedKey}" upperCase="false" select="onSelectIconFilter">
+							<items>
+								<IconTabFilter id="itfDA" icon="sap-icon://hint" text="Department Admin" key="DA" count=" " tooltip="Department Admin" iconColor="Marker"></IconTabFilter>
+								<IconTabFilter id="itfHRP" icon="sap-icon://hint" text="HR Partner" key="HRP" count=" " tooltip="HR Partner" iconColor="Marker"></IconTabFilter>
+								<IconTabFilter id="itfCA" icon="sap-icon://employee-rejections" count=" " tooltip="Claim Assistant" text="Claim Assistant" key="CA"
+									iconColor="Negative"></IconTabFilter>
+								<IconTabFilter id="itfVerifier" icon="sap-icon://status-in-process" count=" " tooltip="Verifier" text="Verifier" key="Verifier"
+									iconColor="Critical"></IconTabFilter>
+								<IconTabFilter id="itfApprover" icon="sap-icon://complete" count="0" tooltip="Approver" text="Approver" key="Approver" iconColor="Positive"></IconTabFilter>
+							</items>
+							<content>
+								<core:Fragment fragmentName="nus.edu.sg.approvermatrix.view.fragments.Filter" type="XML"/>
+								<Table class="sapUiSizeCompact" id="idApproverMatrixTable" inset="false" growing="false" growingThreshold="50" growingScrollToLoad="true"
+									sticky="ColumnHeaders,HeaderToolbar"
+									items="{ path: 'MatrixModel>/EclaimsApprovalMatrixViews', sorter: { path: 'ULU', descending: true},templateShareable:true}">
+									<headerToolbar>
+										<OverflowToolbar>
+											<!--<content>-->
+											<Button icon="sap-icon://refresh" text="Refresh" tooltip="Refresh" press="onPressRefreshApproverMatrix" type="Transparent"/>
+											<ToolbarSpacer/>
+											<!--<SearchField id="srcFieldAppMatrixId" placeholder="{i18n>ApproverMatrix.Search.Ph}" search="onSearchAssignmentRequest" width="20%"
+									visible="{AppModel>/showAssignNewButton}"/>-->
+											<Button icon="sap-icon://activity-assigned-to-goal" press="onPressAssignNew" text="{i18n>ApproverMatrix.Button.AssignNew}"
+												type="Transparent" visible="{AppModel>/showAssignNewButton}"/>
+									 		<Button icon="sap-icon://download" tooltip="{i18n>ApproverMatrix.Button.Export}" press="onPressExport"
+												visible="{AppModel>/showAssignNewButton}"/>
+										</OverflowToolbar>
+									</headerToolbar>
+									<columns>
+										<Column width="10rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column1}"/>
+										</Column>
+										<Column width="18rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column2}"/>
+										</Column>
+										<Column width="10rem" hAlign="Left" minScreenWidth="Tablet">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column3}"/>
+										</Column>
+										<Column width="8rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column4}"/>
+										</Column>
+										<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column5}" wrapping="true"/>
+										</Column>
+										<Column hAlign="Left" minScreenWidth="Tablet">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column6}"/>
+										</Column>
+										<Column width="10rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column7}"/>
+										</Column>
+										<Column hAlign="Left" visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? false : true }" minScreenWidth="Tablet"
+											demandPopin="true" popinDisplay="Inline">
+											<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column8}"/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Inactive" press="onPressPreviewClaimRequest">
+											<cells>
+												<!--<ObjectIdentifier title="{= ${MatrixModel>STATUS_CODE} === '01' ? 'Draft' : ${MatrixModel>REQUEST_ID} }"/>-->
+												<ObjectIdentifier title="{MatrixModel>PROCESS_TITLE}"/>
+												<!--	<Text text="({MatrixModel>CLAIM_TYPE})"/>-->
+												<VBox>
+													<Text text="{MatrixModel>ULU_T} ({MatrixModel>ULU})/"/>
+													<Text text="{MatrixModel>FDLU_T} ({MatrixModel>FDLU})"/>
+												</VBox>
+												<VBox>
+													<Text text="{MatrixModel>FULL_NM}"/>
+													<Text text="{MatrixModel>STAFF_ID} ({MatrixModel>STAFF_NUSNET_ID})"/>
+												</VBox>
+												<Text text="{MatrixModel>STAFF_USER_ALIAS}"/>
+												<Text text="{ path: 'MatrixModel>VALID_FROM', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' } }"/>
+												<Text text="{ path: 'MatrixModel>VALID_TO', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' } }"/>
+												<VBox>
+													<!--<Text text="{ parts: [ {path:'MatrixModel'},{path:'MatrixModel>VALID_TO'}], formatter: '.formatter.changeTheValidityDisplayFormat' }"/>-->
+													<Text text="{ path: 'MatrixModel>UPDATED_ON', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'd MMM, yyyy HH:mm:ss' } }"/>
+													<Text text="{ path: 'MatrixModel>UPDATED_BY_NID'}"/>
+												</VBox>
+												<!--<HBox>
+										<Button icon="sap-icon://edit-outside" tooltip="Edit" press="onPressEditConfig"/>
+										<Text width="0.2em"/>
+										<Button icon="sap-icon://delete" press="onPressDeleteConfig"/>
+									</HBox>-->
+												<MenuButton
+													visible="{ parts: [ {path:'MatrixModel>VALID_FROM'}, {path:'MatrixModel>VALID_TO'} ], formatter: '.formatter.checkValidityForDelemition' }">
+													<menu>
+														<Menu >
+															<MenuItem text="Delimit" icon="sap-icon://eraser" enabled="true" press="onPressDelimitConfig"/>
+															<!--<MenuItem text="Delete" icon="sap-icon://delete" enabled="true" press="onPressDeleteConfig"/>-->
+														</Menu>
+													</menu>
+												</MenuButton>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</content>
+						</IconTabBar>
+					</headerContainer>
+				</ObjectHeader>
+			</content>
+		</Page>
+	</App>
+</mvc:View>
