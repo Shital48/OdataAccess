@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<HBox>
+		<!--<VBox width="6%" class="loggedInUserPhotoStyle sapUiContentPadding">
+			<Avatar displaySize="S" displayShape="Circle" press="onPressLoggedInUserPhoto" src="{AppModel>/staffPhoto}" badgeIcon="sap-icon://display"
+				badgeTooltip="Julie Armstrong"/>
+		</VBox>-->
+		<VBox width="94%">
+			<fb:FilterBar showFilterConfiguration="false" useToolbar="false" id="planningFilterBar" clear="onClear" search="onSearchAssignmentRequest"
+				showClearOnFB="true" class="sapUiNoMargin sapUiNoContentPadding">
+				<fb:filterGroupItems>
+					<!--<fb:FilterGroupItem groupName="__$INTERNAL$" name="As Of Date" label="As Of Date" labelTooltip="As Of Date"
+						visibleInFilterBar="true">
+						<fb:control>
+							<ComboBox selectedKey="{AppModel>/selectedKeySubmissionDate}" selectionChange="onSelectSubmissionDate">
+								<core:Item key="Today" text="Today"/>
+								<core:Item key="Last7Days" text="Last 7 Days"/>
+								<core:Item key="Last15Days" text="Last 15 Days"/>
+								<core:Item key="Last30Days" text="Last 30 Days"/>
+								<core:Item key="Others" text="Others"/>
+							</ComboBox>
+						</fb:control>
+					</fb:FilterGroupItem>-->
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="AsOfDate" label="As Of Date" labelTooltip="" visibleInFilterBar="true"
+						visible="{AppModel>/showAssignNewButton}">
+						<fb:control>
+							<DatePicker valueFormat="yyyy-MM-dd" value="{AppModel>/asOfDate}" enabled="true" visible="{AppModel>/showAssignNewButton}"></DatePicker>
+							<!--<DatePicker valueFormat="yyyy-MM-dd" value="{AppModel>/submissionStartDate}"
+								enabled="{= ${AppModel>/selectedKeySubmissionDate} === 'Others' ? true : false}"></DatePicker>-->
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="Search Assignment" labelTooltip="" visibleInFilterBar="true"
+						visible="{AppModel>/showAssignNewButton}">
+						<fb:control>
+							<SearchField placeholder="{i18n>ApproverMatrix.Search.Ph}" width="20%" visible="{AppModel>/showAssignNewButton}"
+								value="{AppModel>/searchAttr}"/>
+							<!--<DatePicker valueFormat="yyyy-MM-dd" value="{AppModel>/submissionEndDate}"
+								enabled="{= ${AppModel>/selectedKeySubmissionDate} === 'Others' ? true : false}"></DatePicker>-->
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+		</VBox>
+	</HBox>
+</core:FragmentDefinition>

@@ -14,7 +14,13 @@
             "id": "@sap/generator-fiori:basic",
             "version": "1.15.6",
             "toolsId": "31ab087f-7bc3-444f-805c-8ba9965e1b72"
-        }  
+        },
+         "dataSources": {
+			"local_data_alias": {
+				"uri": "enums/localdata.json",
+				"type": "JSON"
+			}
+		} 
     },
     "sap.ui": {
         "technology": "UI5",
@@ -52,13 +58,10 @@
                     "bundleName": "com.odatatest.odatatestproject.i18n.i18n"
                 }
             },
-            "": {
-                "type": "sap.ui.model.odata.v2.ODataModel",
-                "uri": "/sap/opu/odata/sap/ZMM_GV_PROCESS_SRV/",
-                "settings": {
-                  "saml2": "disabled"
-                }
-            }
+            "LocalModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "local_data_alias"
+			}
         },
         "resources": {
             "css": [
